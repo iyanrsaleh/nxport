@@ -1,0 +1,10 @@
+# Build artifacts
+nxport.exe
+nxport
+nxport-linux
+*.obj
+*.o
+
+# OS
+Thumbs.db
+.DS_Store

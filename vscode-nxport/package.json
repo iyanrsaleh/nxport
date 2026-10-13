@@ -1,0 +1,128 @@
+{
+  "name": "nxport",
+  "displayName": "NxPort — Port Inspector",
+  "description": "Inspect listening ports, open them in a browser, and stop them — powered by the nxport CLI.",
+  "version": "0.1.0",
+  "publisher": "nxport",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Other",
+    "Debuggers"
+  ],
+  "keywords": [
+    "port",
+    "listen",
+    "localhost",
+    "tcp",
+    "kill port",
+    "dev server"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "nxport.show",
+        "title": "Show Listening Ports"
+      },
+      {
+        "command": "nxport.refresh",
+        "title": "Refresh Ports"
+      },
+      {
+        "command": "nxport.openPort",
+        "title": "Open in Browser"
+      },
+      {
+        "command": "nxport.killPort",
+        "title": "Stop Port"
+      },
+      {
+        "command": "nxport.copyUrl",
+        "title": "Copy URL"
+      },
+      {
+        "command": "nxport.copyDetails",
+        "title": "Copy Port Details"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "nxport.refresh",
+          "when": "view == nxport.ports",
+          "group": "navigation@1"
+        },
+        {
+          "command": "nxport.show",
+          "when": "view == nxport.ports",
+          "group": "navigation@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "nxport.openPort",
+          "when": "view == nxport.ports && viewItem == nxport.port",
+          "group": "navigation@1"
+        },
+        {
+          "command": "nxport.killPort",
+          "when": "view == nxport.ports && viewItem == nxport.port",
+          "group": "navigation@2"
+        },
+        {
+          "command": "nxport.copyUrl",
+          "when": "view == nxport.ports && viewItem == nxport.port",
+          "group": "1_copy@1"
+        },
+        {
+          "command": "nxport.copyDetails",
+          "when": "view == nxport.ports && viewItem == nxport.port",
+          "group": "1_copy@2"
+        }
+      ]
+    },
+    "views": {
+      "explorer": [
+        {
+          "id": "nxport.ports",
+          "name": "NxPort Ports"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "NxPort",
+      "properties": {
+        "nxport.command": {
+          "type": "string",
+          "default": "nxport",
+          "description": "Path to the nxport executable. Leave as 'nxport' if it is already on your PATH."
+        },
+        "nxport.autoRefresh": {
+          "type": "boolean",
+          "default": true,
+          "description": "Refresh the port list automatically."
+        },
+        "nxport.refreshInterval": {
+          "type": "number",
+          "default": 5000,
+          "minimum": 1000,
+          "description": "Auto-refresh interval in milliseconds."
+        },
+        "nxport.openUrlTemplate": {
+          "type": "string",
+          "default": "http://localhost:{port}",
+          "description": "URL template used by 'Open in Browser'. {port} and {address} are substituted."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "test": "node --check extension.js"
+  }
+}
